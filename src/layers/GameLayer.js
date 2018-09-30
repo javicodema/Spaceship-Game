@@ -6,6 +6,7 @@ class GameLayer extends Layer {
     }
 
     iniciar() {
+        reproducirMusica();
         this.fondoPuntos =
             new Fondo(imagenes.icono_puntos, 480*0.85,320*0.05);
 
