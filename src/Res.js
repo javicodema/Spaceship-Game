@@ -10,7 +10,8 @@ var imagenes = {
     moneda : "res/moneda.png",
     recolectable : "res/icono_recolectable.png",
     vida : "res/corazon.png",
-    bomba: "res/bomba.png"
+    bomba: "res/bomba.png",
+    bullet: "res/bullet.png"
 };
 
 var rutasImagenes = Object.values(imagenes);

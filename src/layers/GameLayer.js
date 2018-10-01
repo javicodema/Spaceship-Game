@@ -14,6 +14,10 @@ class GameLayer extends Layer {
         this.fondoVida =
             new Fondo(imagenes.vida, 480*0.15,320*0.05);
 
+        this.disparos = new Texto(0,480*0.5,320*0.07 );
+        this.fondoDisparos =
+            new Fondo(imagenes.bullet, 480*0.45,320*0.05);
+
         this.vidas = new Texto(3,480*0.2,320*0.07 );
         this.jugador = new Jugador(50, 50);
         this.fondo = new Fondo(imagenes.fondo,480*0.5,320*0.5);
@@ -34,7 +38,7 @@ class GameLayer extends Layer {
 
         this.fondo.vx = -1;
         this.fondo.actualizar();
-
+        this.disparos.valor=this.jugador.disparosLeft;
 
         console.log("disparosJugador: "+this.disparosJugador.length);
         // Eliminar disparos fuera de pantalla
@@ -58,15 +62,27 @@ class GameLayer extends Layer {
             var eY = Math.random() * (300 - 60) + 60;
             var rX =(Math.random() *  480)+1;
             var rY = (Math.random() *  320)+1;
-            var pX =(Math.random() *  480)+1;
-            var pY = (Math.random() *  320)+1;
-            var bX =(Math.random() *  480)+1;
-            var bY = (Math.random() *  320)+1;
+
             this.enemigos.push(new Enemigo(eX,eY));
             this.recolectables.push(new Recolectable(rX,rY));
-            this.powerups.push(new PowerUp(pX,pY));
-            this.bombas.push(new Bomba(bX,bY));
+
+
             this.iteracionesCrearEnemigos = 0;
+        }
+
+        if (this.iteracionesCrearBomba == null){
+            this.iteracionesCrearBomba = 0;
+        }
+        this.iteracionesCrearBomba ++;
+
+        if(this.iteracionesCrearBomba>200){
+            var bX =(Math.random() *  480)+1;
+            var bY = (Math.random() *  320)+1;
+            var pX =(Math.random() *  480)+1;
+            var pY = (Math.random() *  320)+1;
+            this.bombas.push(new Bomba(bX,bY));
+            this.powerups.push(new PowerUp(pX,pY));
+            this.iteracionesCrearBomba = 0;
         }
 
         this.jugador.actualizar();
@@ -169,6 +185,8 @@ class GameLayer extends Layer {
         this.puntos.dibujar();
         this.fondoVida.dibujar();
         this.vidas.dibujar();
+        this.fondoDisparos.dibujar();
+        this.disparos.dibujar();
     }
 
 
