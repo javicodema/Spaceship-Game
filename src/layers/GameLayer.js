@@ -11,6 +11,8 @@ class GameLayer extends Layer {
             new Fondo(imagenes.icono_puntos, 480*0.85,320*0.05);
 
         this.puntos = new Texto(0,480*0.9,320*0.07 );
+
+        this.vidas = new Texto(3,480*0.2,320*0.07 );
         this.fondoVida =
             new Fondo(imagenes.vida, 480*0.15,320*0.05);
 
@@ -18,7 +20,6 @@ class GameLayer extends Layer {
         this.fondoDisparos =
             new Fondo(imagenes.bullet, 480*0.45,320*0.05);
 
-        this.vidas = new Texto(3,480*0.2,320*0.07 );
         this.jugador = new Jugador(50, 50);
         this.fondo = new Fondo(imagenes.fondo,480*0.5,320*0.5);
         this.enemigos = [];
@@ -27,7 +28,6 @@ class GameLayer extends Layer {
         this.disparosJugador = [];
 
         this.recolectables = [];
-        this.recolectables.push(new Recolectable(200,300));
 
         this.powerups = [];
 
@@ -64,7 +64,7 @@ class GameLayer extends Layer {
             var rY = (Math.random() *  320)+1;
 
             this.enemigos.push(new Enemigo(eX,eY));
-            this.recolectables.push(new Recolectable(rX,rY));
+            if(this.recolectables.length<5) this.recolectables.push(new Recolectable(rX,rY));
 
 
             this.iteracionesCrearEnemigos = 0;
@@ -75,15 +75,26 @@ class GameLayer extends Layer {
         }
         this.iteracionesCrearBomba ++;
 
-        if(this.iteracionesCrearBomba>200){
+        if(this.iteracionesCrearBomba>300&&this.bombas.length<2){
             var bX =(Math.random() *  480)+1;
             var bY = (Math.random() *  320)+1;
-            var pX =(Math.random() *  480)+1;
-            var pY = (Math.random() *  320)+1;
             this.bombas.push(new Bomba(bX,bY));
-            this.powerups.push(new PowerUp(pX,pY));
             this.iteracionesCrearBomba = 0;
         }
+
+        if (this.iteracionesCrearPowerUp == null){
+            this.iteracionesCrearPowerUp = 0;
+        }
+        this.iteracionesCrearPowerUp ++;
+
+        if(this.iteracionesCrearPowerUp>200&&this.powerups.length<3){
+            var pX =(Math.random() *  480)+1;
+            var pY = (Math.random() *  320)+1;
+            this.powerups.push(new PowerUp(pX,pY));
+            this.iteracionesCrearPowerUp = 0;
+        }
+
+
 
         this.jugador.actualizar();
         for (var i=0; i < this.enemigos.length; i++){

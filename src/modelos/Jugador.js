@@ -32,8 +32,11 @@ class Jugador extends Modelo {
         }
 
 
-        this.x = this.x + this.vx;
-        this.y = this.y + this.vy;
+        var newX = this.x+this.vx;
+        var newY = this.y+this.vy;
+
+        if(newX>0&&newX<480) this.x = this.x + this.vx;
+        if(newY>0&&newY<320) this.y = this.y + this.vy;
     }
 
     moverX(direccion) {
